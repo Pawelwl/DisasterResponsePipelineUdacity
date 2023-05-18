@@ -1,15 +1,15 @@
 # Disaster Response Pipeline Project
 The project is a supervised learning classification task. It takes as input a text message and classifies it into the relvent number of possible 36 output categories.
 The project code is written in Python language. THe following libraries are needed to be installed:
-json
-plotly
-pandas
-nltk
-flask
-sklearn
-sqlalchemy
-sys
-pickle
+* json
+* plotly
+* pandas
+* nltk
+* flask
+* sklearn
+* sqlalchemy
+* sys
+* pickle
 
 ### Instructions on how to run the app:
 1. Download the code and install all necessary Python libraries.
