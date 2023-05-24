@@ -14,6 +14,17 @@ from sklearn.metrics import classification_report
 import pickle
 
 def load_data(database_filepath):
+    '''
+    Load data from database and split it into X and Y variables
+    
+    Input:
+    database_filepath: filepath to database
+    
+    Returns:
+    X: the explanatory variable (text message)
+    Y: the explained variable (categories)
+    category_names: names of the categories
+    '''
     engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql_table('MergedDataSet', engine)
     Y = df.drop(['id', 'message', 'original', 'genre'], axis=1)
@@ -22,6 +33,15 @@ def load_data(database_filepath):
     return X, Y, category_names
 
 def tokenize(text):
+    '''
+    Transform text into tokens - preparation for ML modelling
+    
+    Input:
+    text: text in string format
+    
+    Returns:
+    clean_tokens: list of tokens - cleaned words prepared for ML modelling
+    '''
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -32,6 +52,12 @@ def tokenize(text):
     return clean_tokens
 
 def build_model():
+    '''
+    Instantiation of model classifier and preparation of ML pipeline of data transformation and modelling
+      
+    Returns:
+    pipeline: Machine Learning pipeline transforming and modelling data
+    '''
     classifier = RandomForestClassifier()
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
@@ -40,6 +66,15 @@ def build_model():
     return pipeline
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    '''
+    Calculate model predictions on test set and compare them with actuals using classification error metrics
+    
+    Input:
+    model: trained classification model
+    X_test: test set for X variable
+    Y_test: test set for Y variable
+    category_names: names of the explained variable categories
+    '''
     y_pred = model.predict(X_test)
     col_num = 0
 
@@ -49,6 +84,13 @@ def evaluate_model(model, X_test, Y_test, category_names):
         col_num += 1
 
 def save_model(model, model_filepath):
+    '''
+    Save model in pickle format in a specified filepath
+    
+    Input:
+    model: trained classification model
+    model_filepath: filepath for model
+    '''
     pickle.dump(model, open(model_filepath, 'wb'))
 
 def main():
