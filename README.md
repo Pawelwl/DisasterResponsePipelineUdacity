@@ -1,6 +1,7 @@
-# Disaster Response Pipeline Project
-The project is a supervised learning classification task. It takes as input a text message and classifies it into the relvent number of possible 36 output categories.
-The project code is written in Python language. THe following libraries are needed to be installed:
+## Disaster Response Pipeline Project
+The objective of the project is to build a classification model that categorizes text messages into 36 categories. The short text messages, which are sent by people during a natural disaster require different follow up action depending on the information in the message. When a disaster happenes a lot of messages are sent. Therefore a good model, which can classify messages into appropriate categories, will improve the process of help provided to people.
+It is a supervised learning classification task. The project code is written in Python language. 
+The following libraries are needed to be installed as a prerequisite:
 * json
 * plotly
 * pandas
@@ -10,6 +11,24 @@ The project code is written in Python language. THe following libraries are need
 * sqlalchemy
 * sys
 * pickle
+
+#### Files in the repository
+```
+app
+|- templates
+| |- master.html # main page of web app
+| |- go.html # classification result page of web app
+|- run.py # Flask file that runs app
+data
+|- disaster_categories.csv # data to process
+|- disaster_messages.csv # data to process
+|- process_data.py # code to process the data
+|- DisasterResponse.db # database to save clean data to
+models
+|- train_classifier.py # code to build, evaluate and save a classification model
+|- classifier.pkl # saved model
+README.md
+```
 
 ### Instructions on how to run the app:
 1. Download the code and install all necessary Python libraries.
