@@ -3,7 +3,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 from sklearn.pipeline import Pipeline
 import nltk
-nltk.download(['punkt', 'wordnet'])
+nltk.download(['punkt', 'wordnet', 'stopwords'])
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
@@ -71,10 +71,7 @@ def build_model():
         ('clf', MultiOutputClassifier(classifier))
     ])
     
-    parameters = {
-        'clf__n_estimators': [50, 100],
-        'clf__min_samples_split': [2, 4]
-    }
+    parameters = {'clf__estimator__n_estimators': [20, 50]}
 
     cv = GridSearchCV(pipeline, param_grid=parameters)
     return cv
