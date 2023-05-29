@@ -12,6 +12,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
+from sklearn.model_selection import GridSearchCV
 import pickle
 
 def load_data(database_filepath):
@@ -69,7 +70,14 @@ def build_model():
         ('tfidf', TfidfTransformer()),
         ('clf', MultiOutputClassifier(classifier))
     ])
-    return pipeline
+    
+    parameters = {
+        'clf__n_estimators': [50, 100],
+        'clf__min_samples_split': [2, 4]
+    }
+
+    cv = GridSearchCV(pipeline, param_grid=parameters)
+    return cv
 
 def evaluate_model(model, X_test, Y_test, category_names):
     '''
