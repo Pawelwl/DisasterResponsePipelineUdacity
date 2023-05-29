@@ -6,6 +6,7 @@ import nltk
 nltk.download(['punkt', 'wordnet'])
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
+from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.multioutput import MultiOutputClassifier
@@ -43,6 +44,10 @@ def tokenize(text):
     clean_tokens: list of tokens - cleaned words prepared for ML modelling
     '''
     tokens = word_tokenize(text)
+    
+    # remove stopwords
+    tokens = [tok for tok in tokens if tok not in stopwords.words("english")]
+    
     lemmatizer = WordNetLemmatizer()
 
     clean_tokens = []
