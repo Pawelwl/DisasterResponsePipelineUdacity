@@ -27,7 +27,7 @@ def tokenize(text):
 
 # load data
 engine = create_engine('sqlite:///../data/DisasterResponse.db')
-df = pd.read_sql_table('MergedDataSet', engine)
+df = pd.read_sql_table('InsertTableName', engine)
 
 # load model
 model = joblib.load("../models/classifier.pkl")
@@ -39,12 +39,11 @@ model = joblib.load("../models/classifier.pkl")
 def index():
     
     # extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
-    
-    # create visuals
-    # TODO: Below is an example - modify to create your own visuals
+    category_counts_top_10 = df.drop(['id','message','original', 'genre'], axis=1).sum().sort_values(ascending=False).head(10)
+    category_names = list(category_counts_top_10.index)
+    # charts
     graphs = [
         {
             'data': [
@@ -63,9 +62,26 @@ def index():
                     'title': "Genre"
                 }
             }
+        },
+        {
+            'data': [
+                Bar(
+                    x=category_names,
+                    y=category_counts_top_10
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of Top 10 Categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category"
+                }
+            }
         }
     ]
-    
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
@@ -93,7 +109,7 @@ def go():
 
 
 def main():
-    app.run(host='0.0.0.0', port=3001, debug=True)
+    app.run(host='0.0.0.0', port=3000, debug=True)
 
 
 if __name__ == '__main__':
