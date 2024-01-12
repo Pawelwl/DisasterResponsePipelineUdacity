@@ -12,7 +12,7 @@ The following libraries are needed to be installed as a prerequisite:
 * sys
 * pickle
 
-#### Files in the repository
+### Files in the repository
 ```
 app
 |- templates
